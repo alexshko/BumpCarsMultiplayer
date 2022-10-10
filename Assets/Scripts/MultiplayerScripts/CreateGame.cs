@@ -6,7 +6,13 @@ namespace alexshkorp.bumpcars.Multiplayer
 {
     public class CreateGame : ICreateGame
     {
-        public void StartGame(GameMode mode, string username, string sessionName) { }
+
+
+        public void StartGame(GameMode mode, string username, string sessionName) {
+
+            Debug.Log("Connecting to multiplayer game");
+        
+        }
 
     }
 }
