@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 140316, guid: 2cd5d52bec1bbd74aa18e7ef142a8cd0, type: 3}
       propertyPath: m_Name
-      value: RaceC
+      value: Player 1
       objectReference: {fileID: 0}
     - target: {fileID: 474748, guid: 2cd5d52bec1bbd74aa18e7ef142a8cd0, type: 3}
       propertyPath: m_RootOrder
@@ -57,3 +57,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cd5d52bec1bbd74aa18e7ef142a8cd0, type: 3}
+--- !u!1 &5626912078117666483 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 140316, guid: 2cd5d52bec1bbd74aa18e7ef142a8cd0, type: 3}
+  m_PrefabInstance: {fileID: 5626912078117526191}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6212519568658679722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626912078117666483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0ef3f1f10a35594abcdc3a65edc3d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

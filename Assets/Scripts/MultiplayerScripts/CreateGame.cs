@@ -8,7 +8,7 @@ namespace alexshkorp.bumpcars.Multiplayer
 {
     public class CreateGame : ICreateGame
     {
-        [Inject(Id ="StartGame")]
+        [Inject]
         NetworkRunner _networkInst;
 
         public void StartGame(GameMode mode, string username, string sessionName) 
