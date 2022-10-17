@@ -1,18 +1,22 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] float speedOfMove = 5;
+
+    public override void FixedUpdateNetwork()
     {
-        
+        if (GetInput(out PlayerInputData input))
+        {
+            transform.position += input.directionMove * speedOfMove * Runner.DeltaTime;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Spawned()
     {
-        
+        base.Spawned();
     }
 }

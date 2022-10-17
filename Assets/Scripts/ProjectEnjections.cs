@@ -14,5 +14,6 @@ public class ProjectEnjections : MonoInstaller
         Container.Bind<IPlayerCreate>().To<GamePlayersCreator>().AsSingle().NonLazy();
         Container.Bind<NetworkObject>().FromInstance(carPrefab).WhenInjectedInto<GamePlayersCreator>().NonLazy();
         Container.Bind<NetworkRunner>().FromComponentInNewPrefab(networkRunnerRef).AsSingle();
+        Container.Bind<IPlayerInput>().To<GamePlayerInput>().AsTransient();
     }
 }

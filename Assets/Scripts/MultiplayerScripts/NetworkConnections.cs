@@ -11,6 +11,9 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
     [Inject]
     public IPlayerCreate _playersCreator;
 
+    [Inject]
+    private IPlayerInput _playerInput;
+
     void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
     {
         //throw new NotImplementedException();
@@ -43,7 +46,10 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
 
     void INetworkRunnerCallbacks.OnInput(NetworkRunner runner, NetworkInput input)
     {
-        //throw new NotImplementedException();
+        var data = new PlayerInputData();
+        data.directionMove = _playerInput.InputDirection;
+
+        input.Set(data);
     }
 
     void INetworkRunnerCallbacks.OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
