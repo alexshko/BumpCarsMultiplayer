@@ -4,9 +4,11 @@ using UnityEngine;
 using Fusion;
 using Fusion.Sockets;
 using System;
+using Zenject;
 
 public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
 {
+
     void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
     {
         //throw new NotImplementedException();
@@ -49,7 +51,6 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
 
     void INetworkRunnerCallbacks.OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        //throw new NotImplementedException();
     }
 
     void INetworkRunnerCallbacks.OnPlayerLeft(NetworkRunner runner, PlayerRef player)
@@ -86,4 +87,5 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
     {
         //throw new NotImplementedException();
     }
+
 }

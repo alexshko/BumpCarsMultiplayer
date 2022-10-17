@@ -29,6 +29,7 @@ namespace alexshkorp.bumpcars.Multiplayer
                 GameMode = mode,
                 SessionName = sessionName,
                 Scene = 1,
+                PlayerCount = 2,
                 SceneManager = _networkInst.GetComponent<NetworkSceneManagerDefault>()
             };
             await _networkInst.StartGame(gameArgs);

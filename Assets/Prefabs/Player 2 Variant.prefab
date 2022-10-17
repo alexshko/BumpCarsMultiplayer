@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1659323927994590594, guid: 20af62eb6a5e83848850e6685fba7a8a, type: 3}
+      propertyPath: Flags
+      value: 2305
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659323927994590594, guid: 20af62eb6a5e83848850e6685fba7a8a, type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
+      value: 3758332370145407492
+      objectReference: {fileID: 0}
+    - target: {fileID: 1659323927994590594, guid: 20af62eb6a5e83848850e6685fba7a8a, type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
+      value: -2606269451137745670
+      objectReference: {fileID: 0}
     - target: {fileID: 5626912078117463251, guid: 20af62eb6a5e83848850e6685fba7a8a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -53,7 +65,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5626912078117666483, guid: 20af62eb6a5e83848850e6685fba7a8a, type: 3}
       propertyPath: m_Name
-      value: Player 2
+      value: Player 2 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349728651547594188, guid: 20af62eb6a5e83848850e6685fba7a8a, type: 3}
+      propertyPath: Flags
+      value: 2305
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349728651547594188, guid: 20af62eb6a5e83848850e6685fba7a8a, type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[0]
+      value: 3758332370145407492
+      objectReference: {fileID: 0}
+    - target: {fileID: 7349728651547594188, guid: 20af62eb6a5e83848850e6685fba7a8a, type: 3}
+      propertyPath: NetworkGuid.RawGuidValue.Array.data[1]
+      value: -2606269451137745670
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 20af62eb6a5e83848850e6685fba7a8a, type: 3}
