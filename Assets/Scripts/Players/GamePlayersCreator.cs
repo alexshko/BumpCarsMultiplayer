@@ -36,8 +36,8 @@ public class GamePlayersCreator : IPlayerCreate
 
     public void CreateCarInstance(PlayerRef player)
     {
-        Vector3 posToInit = positionsForInit[_networkRunner.ActivePlayers.Count()].position;
-        var playerObject = _networkRunner.Spawn(_carPrefab, posToInit, Quaternion.identity, player);
+        Transform posToInit = positionsForInit[_networkRunner.ActivePlayers.Count()];
+        var playerObject = _networkRunner.Spawn(_carPrefab, posToInit.position, posToInit.rotation, player);
         _networkRunner.SetPlayerObject(player, playerObject);
     }
 
