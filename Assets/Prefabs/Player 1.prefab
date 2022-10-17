@@ -57,11 +57,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cd5d52bec1bbd74aa18e7ef142a8cd0, type: 3}
+--- !u!4 &5626912078117463251 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 474748, guid: 2cd5d52bec1bbd74aa18e7ef142a8cd0, type: 3}
+  m_PrefabInstance: {fileID: 5626912078117526191}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5626912078117666483 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 140316, guid: 2cd5d52bec1bbd74aa18e7ef142a8cd0, type: 3}
   m_PrefabInstance: {fileID: 5626912078117526191}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4572676818611955795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5626912078117666483}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  InterpolationSpace: 0
+  InterpolationTarget: {fileID: 5626912078117463251}
+  InterpolateErrorCorrection: 1
+  InterpolatedErrorCorrectionSettings:
+    MinRate: 3.3
+    MaxRate: 10
+    PosBlendStart: 0.25
+    PosBlendEnd: 1
+    PosMinCorrection: 0.025
+    PosTeleportDistance: 2
+    RotBlendStart: 0.1
+    RotBlendEnd: 0.5
+    RotTeleportRadians: 1.5
 --- !u!114 &5728093198981047660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,5 +139,6 @@ MonoBehaviour:
   NetworkGuid:
     RawGuidValue: 20af62eb6a5e83848850e6685fba7a8a
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 4572676818611955795}
   SimulationBehaviours: []

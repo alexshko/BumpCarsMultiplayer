@@ -25,7 +25,6 @@ public class GamePlayersCreator : IPlayerCreate
     public GamePlayersCreator()
     {
         Debug.Log("Found posiotion");
-        FindInitPositions();
     }
 
     private void FindInitPositions()
@@ -36,6 +35,10 @@ public class GamePlayersCreator : IPlayerCreate
 
     public void CreateCarInstance(PlayerRef player)
     {
+        if (positionsForInit == null || positionsForInit.Length == 0)
+        {
+            FindInitPositions();
+        }
         Transform posToInit = positionsForInit[_networkRunner.ActivePlayers.Count()];
         var playerObject = _networkRunner.Spawn(_carPrefab, posToInit.position, posToInit.rotation, player);
         _networkRunner.SetPlayerObject(player, playerObject);

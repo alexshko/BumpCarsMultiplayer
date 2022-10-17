@@ -13,11 +13,11 @@ public class GameSpawnPlayers : NetworkBehaviour, IPlayerJoined, IPlayerLeft
 
     public void PlayerLeft(PlayerRef player)
     {
-        _playersCreator.RemoveCarInstance(player);
+        //_playersCreator.RemoveCarInstance(player);
     }
 
     public void PlayerJoined(PlayerRef player)
     {
-        _playersCreator.CreateCarInstance(player);
+        //_playersCreator.CreateCarInstance(player);
     }
 }

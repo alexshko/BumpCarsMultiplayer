@@ -8,6 +8,8 @@ using Zenject;
 
 public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
 {
+    [Inject]
+    public IPlayerCreate _playersCreator;
 
     void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
     {
@@ -51,11 +53,20 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
 
     void INetworkRunnerCallbacks.OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
+        Debug.LogFormat("{0}: player joined", runner.IsServer? "Server" : "Client");
+        if (runner.IsServer)
+        {
+            _playersCreator.CreateCarInstance(player);
+        }
     }
 
     void INetworkRunnerCallbacks.OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        //throw new NotImplementedException();
+        Debug.LogFormat("{0}: player left", runner.IsServer ? "Server" : "Client");
+        if (runner.IsServer)
+        {
+            _playersCreator.RemoveCarInstance(player);
+        }
     }
 
     void INetworkRunnerCallbacks.OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data)
