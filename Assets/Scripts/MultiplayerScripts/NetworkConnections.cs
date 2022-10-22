@@ -48,6 +48,7 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
     {
         var data = new PlayerInputData();
         data.directionMove = _playerInput.InputDirection;
+        Debug.LogFormat("Move Input: {0}", data.directionMove);
 
         input.Set(data);
     }
@@ -98,6 +99,7 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
     void INetworkRunnerCallbacks.OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
         //throw new NotImplementedException();
+        Debug.Log("Server Shut down");
     }
 
     void INetworkRunnerCallbacks.OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)

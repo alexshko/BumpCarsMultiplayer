@@ -27,6 +27,8 @@ public class GamePlayersCreator : IPlayerCreate
         Debug.Log("Found posiotion");
     }
 
+    ~GamePlayersCreator() => positionsForInit = null;
+
     private void FindInitPositions()
     {
         var rootInitPos = GameObject.FindGameObjectWithTag("initPos");

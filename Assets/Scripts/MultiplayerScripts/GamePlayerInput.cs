@@ -13,6 +13,7 @@ public class GamePlayerInput : IPlayerInput
     private Vector3 GetDirection()
     {
         //check the correct order of params:
-        return new Vector3(0, Input.GetAxis("Horizontal"), 0);
+        return new Vector3(Input.GetAxis("Horizontal"), 0 , Input.GetAxis("Vertical"));
+        //return new Vector3(1, 0, 1);
     }
 }

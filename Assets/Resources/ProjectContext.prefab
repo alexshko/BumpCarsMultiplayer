@@ -75,4 +75,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkRunnerRef: {fileID: 9097938004931860854, guid: db895518171290245a70fdd7829e406f, type: 3}
-  carPrefab: {fileID: 3165170467008107888, guid: 787b1ed5714ca1c43a1e216acc405dc8, type: 3}
+  carPrefab: {fileID: 5724679708509584410, guid: 3ec4697ed00eda54daeaef777cd95b01, type: 3}
