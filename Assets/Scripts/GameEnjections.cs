@@ -10,7 +10,7 @@ public class GameEnjections : MonoInstaller
     public override void InstallBindings()
     {
         //Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMovementNetworked>().NonLazy();
-        Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlaerMovementSingleplayer>();
+        Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMoveSimpleSinglePlayer>();
         //Container.Bind<Rigidbody>().FromInstance(carPrefab.GetComponent<Rigidbody>()).WhenInjectedInto<PlayerMovement>().NonLazy();
         //Container.Bind<IPlayerCreate>().To<GamePlayersCreator>().AsSingle().NonLazy();
         //Container.Bind<NetworkObject>().FromInstance(carPrefab).WhenInjectedInto<GamePlayersCreator>().NonLazy();

@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class PlaerMovementSingleplayer : MonoBehaviour
+public class PlayerMovementSingleplayer : MonoBehaviour
 {
     [SerializeField] float speedOfMove = 5;
     [SerializeField] float speedOfTurn = 100;
@@ -42,6 +40,7 @@ public class PlaerMovementSingleplayer : MonoBehaviour
             float signAngle = Mathf.Sign(Vector3.SignedAngle(transform.forward, _input.InputDirection.normalized, Vector3.up));
             //_rb.AddTorque(Vector3.up * Mathf.Sign(Vector3.SignedAngle(transform.forward, _input.InputDirection.normalized * speedofTurn, Vector3.up))  * speedofTurn, ForceMode.Force);
             torqueToApply = signAngle * rotSpeedCurve.Evaluate(directionDiff) * speedOfTurn;
+            torqueToApply = Mathf.Abs(torqueToApply) < 200 ? 0 : torqueToApply;
             _rb.AddTorque(Vector3.up * torqueToApply, ForceMode.Force);
         }
     }

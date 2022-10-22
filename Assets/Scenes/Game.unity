@@ -311,7 +311,7 @@ Transform:
   m_GameObject: {fileID: 336962752}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.1, y: 0, z: 0}
-  m_LocalScale: {x: 19.6, y: 0.1, z: 10}
+  m_LocalScale: {x: 300, y: 0.1, z: 30}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -750,7 +750,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 5.5
+  orthographic size: 12.88
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1826,7 +1826,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5724679708438545940}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 7.890852, y: 0.05000019, z: 0.2651838}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -1834,7 +1834,7 @@ Transform:
   - {fileID: 100463913349446310}
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &5724679708438545946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1897,50 +1897,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5724679708438545940}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51a11643995a37046ae8b0118b3d6f64, type: 3}
+  m_Script: {fileID: 11500000, guid: 458eebbc90192e44abbb1a6591ee886b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedOfMove: 8
-  speedOfTurn: 5000
-  rotSpeedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 0.4
-      value: 0.92072827
-      inSlope: -0.1009147
-      outSlope: -0.062392205
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.19893545
-      outWeight: 0.6988024
-    - serializedVersion: 3
-      time: 0.9912683
-      value: 0.01
-      inSlope: -1.1965159
-      outSlope: -0.41938165
-      tangentMode: 1
-      weightedMode: 0
-      inWeight: 0.11332964
-      outWeight: 1
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  speedOfMove: 3000
+  speedOfTurn: 1200
