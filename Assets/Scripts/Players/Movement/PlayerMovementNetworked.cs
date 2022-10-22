@@ -12,14 +12,24 @@ public class PlayerMovementNetworked : NetworkBehaviour
     [Inject]
     Rigidbody rb;
 
+    private float minSpeedForRotation = 10;
+    private float currentSpeed;
+
     public override void FixedUpdateNetwork()
     {
         if (GetInput(out PlayerInputData input))
         {
+            currentSpeed = input.directionMove.z * speedOfMove;
             Debug.LogFormat("About to move: {0}", input.directionMove);
             //transform.position += input.directionMove * speedOfMove * Runner.DeltaTime;
-            rb.velocity = input.directionMove * speedOfMove;
-            rb.AddTorque(Vector3.up * input.directionMove.z * speedofTurn);
+            rb.AddForce(transform.forward * currentSpeed);
+            if (currentSpeed > minSpeedForRotation)
+            {
+                rb.AddTorque(Vector3.up * input.directionMove.x * speedofTurn);
+            }
+
+            //rb.velocity = input.directionMove * speedOfMove;
+            //rb.AddTorque(Vector3.up * input.directionMove.z * speedofTurn);
         }
     }
 }
