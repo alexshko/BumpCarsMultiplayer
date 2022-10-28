@@ -1,3 +1,5 @@
+using alexshkorp.bumpcars.Multiplayer;
+using alexshkorp.bumpcars.Objects;
 using Fusion;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +10,21 @@ public class GameEnjections : MonoInstaller
     [Tooltip("Prefab of the cars of players")]
     [SerializeField] NetworkObject carPrefab;
 
+    [Tooltip("Prefab of the ball")]
+    [SerializeField] NetworkObject ballPRefab;
+
+    [Tooltip("Prefab of the GameLogic")]
+    [SerializeField] NetworkObject gameLogicPrefab;
+
     public override void InstallBindings()
     {
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMovementNetworked>();
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMoveSimpleSinglePlayer>();
 
         Container.BindInstance<Dictionary<PlayerRef, int>>(new Dictionary<PlayerRef, int>()).WithId("score").AsSingle();
+        Container.Bind<IGameLogic>().To<GameLogic>().FromComponentInNewPrefab(gameLogicPrefab).AsSingle();
+        Container.Bind<NetworkObject>().WithId("ballPref").FromComponentInNewPrefab(ballPRefab).AsTransient();
+        Container.Bind<IGameStateUpdate>().To<GameStateUpdate>().AsSingle().NonLazy();
     }
 
     private void Backup()

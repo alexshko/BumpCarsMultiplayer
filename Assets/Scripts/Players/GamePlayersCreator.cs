@@ -1,4 +1,7 @@
+using alexshkorp.bumpcars.Multiplayer;
+using alexshkorp.bumpcars.Objects;
 using Fusion;
+using System;
 using System.Linq;
 using UnityEngine;
 using Zenject;
@@ -16,6 +19,8 @@ public class GamePlayersCreator : IPlayerCreate
     /// </summary>
     [Inject]
     NetworkRunner _networkRunner;
+
+    public Action NotifyNewPlayerCreated { get; set; }
 
     /// <summary>
     /// Array of positions for starting points of the players
@@ -44,6 +49,12 @@ public class GamePlayersCreator : IPlayerCreate
         Transform posToInit = positionsForInit[_networkRunner.ActivePlayers.Count()];
         var playerObject = _networkRunner.Spawn(_carPrefab, posToInit.position, posToInit.rotation, player);
         _networkRunner.SetPlayerObject(player, playerObject);
+
+        //update the hoop of the player:
+        PlayerHoop hoop = posToInit.GetComponent<PlayerHoop>();
+        hoop.SetPlayer(player);
+
+        NotifyNewPlayerCreated?.Invoke();
     }
 
     public void RemoveCarInstance(PlayerRef player)
