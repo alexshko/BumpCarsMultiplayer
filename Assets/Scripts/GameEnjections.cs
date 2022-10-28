@@ -1,4 +1,5 @@
 using Fusion;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
@@ -10,6 +11,13 @@ public class GameEnjections : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMovementNetworked>();
+        Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMoveSimpleSinglePlayer>();
+
+        Container.BindInstance<Dictionary<PlayerRef, int>>(new Dictionary<PlayerRef, int>()).WithId("score").AsSingle();
+    }
+
+    private void Backup()
+    {
         //Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMovementNetworked>().NonLazy();
         //Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMoveSimpleSinglePlayer>();
         //Container.Bind<Rigidbody>().FromInstance(carPrefab.GetComponent<Rigidbody>()).WhenInjectedInto<PlayerMovement>().NonLazy();

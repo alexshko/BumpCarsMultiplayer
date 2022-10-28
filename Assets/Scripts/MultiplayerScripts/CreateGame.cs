@@ -1,7 +1,6 @@
 using Fusion;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace alexshkorp.bumpcars.Multiplayer
