@@ -9,9 +9,6 @@ namespace alexshkorp.bumpcars.Multiplayer
     {
         NetworkRunner _runner;
 
-        //[Inject(Id ="score")]
-        //Dictionary<PlayerRef, int> _playersScore;
-
         /// <summary>
         /// Reference to the player create methods for registering when user is created
         /// </summary>
