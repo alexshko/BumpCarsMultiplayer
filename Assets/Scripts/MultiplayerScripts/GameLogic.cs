@@ -1,3 +1,4 @@
+using alexshkorp.bumpcars.UI;
 using Fusion;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,8 @@ namespace alexshkorp.bumpcars.Multiplayer
         end,
     }
 
-    public class GameLogic : NetworkObject, ISpawned, IGameLogic
+    public class GameLogic : NetworkObject, ISpawned,IDespawned , IGameLogic
     {
-        /// <summary>
-        /// Prefab of the ball to be instatnitated when the game starts to run
-        /// </summary>
-        [Inject(Id ="ballPref")]
-        NetworkObject ballPref;
-
         /// <summary>
         /// logic of game state
         /// </summary>
@@ -29,18 +24,22 @@ namespace alexshkorp.bumpcars.Multiplayer
         IGameStateUpdate _gameState;
 
         /// <summary>
+        /// Ref to the ball instantiation in the game
+        /// </summary>
+        IBallController _ballController;
+
+        /// <summary>
         /// The players score
         /// </summary>
-
         [Inject(Id = "score")]
         [Networked] public Dictionary<PlayerRef, int> playersScore { get; set; }
+
 
         /// <summary>
         /// The current state of the game
         /// </summary>
         [Networked] public GameState State { get; set; }
 
-        NetworkObject ballRef;
 
         /// <summary>
         /// Called when a player makes a goal
@@ -65,24 +64,13 @@ namespace alexshkorp.bumpcars.Multiplayer
                 Debug.Log("Instantiated state");
                 State = GameState.waitforplayer;
                 _gameState.CalculateGameState();
-                _gameState.NotifyGameStateChange += InstantiateBall;
+                _gameState.NotifyGameStateChange += _ballController.SetBallByGameState;
             }
         }
 
-        /// <summary>
-        /// Spawn or despawn ball according to the 
-        /// </summary>
-        /// <param name="state"></param>
-        private void InstantiateBall(GameState state)
+        public void Despawned(NetworkRunner runner, bool hasState)
         {
-            if (state == GameState.running && ballRef == null)
-            {
-                ballRef = Runner.Spawn(ballPref, new Vector3(0, 1, 0), ballPref.transform.rotation, null);
-            }
-            else if (ballRef != null && state != GameState.running)
-            {
-                Runner.Despawn(ballRef);
-            }
+            _gameState.NotifyGameStateChange -= _ballController.SetBallByGameState;
         }
     }
 }
