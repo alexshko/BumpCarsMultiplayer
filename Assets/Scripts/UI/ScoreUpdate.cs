@@ -15,11 +15,11 @@ namespace alexshkorp.bumpcars.UI
         /// The players score
         /// </summary>
         [Inject(Id = "score")]
-        Dictionary<PlayerRef, int> playersScore;
+        NetworkDictionary<PlayerRef, int> playersScore { get; set; }
 
         private void Update()
         {
-            if (playersScore != null && playersScore.Count > 0)
+            if (playersScore.Count > 0)
             {
                 //change this:
                 txtRef.text = playersScore[0].ToString();

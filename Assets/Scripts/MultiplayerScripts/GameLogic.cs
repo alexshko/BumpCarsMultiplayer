@@ -15,7 +15,7 @@ namespace alexshkorp.bumpcars.Multiplayer
         end,
     }
 
-    public class GameLogic : NetworkObject, ISpawned,IDespawned , IGameLogic
+    public class GameLogic : NetworkBehaviour , IGameLogic
     {
         /// <summary>
         /// logic of game state
@@ -32,7 +32,7 @@ namespace alexshkorp.bumpcars.Multiplayer
         /// The players score
         /// </summary>
         [Inject(Id = "score")]
-        [Networked] public Dictionary<PlayerRef, int> playersScore { get; set; }
+        [Networked] NetworkDictionary<PlayerRef, int> playersScore => default;
 
 
         /// <summary>
@@ -49,16 +49,17 @@ namespace alexshkorp.bumpcars.Multiplayer
         {
             //find the player which is not the one who got the goal:
             var playerMadeGoal = Runner.ActivePlayers.First(p => p != player);
-            if (!playersScore.ContainsKey(playerMadeGoal))
+            if (!playersScore.ContainsKey(playerMadeGoal.PlayerId))
             {
-                playersScore[playerMadeGoal] = 0;
+                playersScore.Set(playerMadeGoal,0);
             }
-            playersScore[playerMadeGoal]++;
+            playersScore.Set(playerMadeGoal, playersScore.Get(playerMadeGoal) + 1);
             _gameState.CalculateGameState();
         }
 
-        public void Spawned()
+        public override void Spawned()
         {
+            base.Spawned();
             if (Runner.IsServer)
             {
                 Debug.Log("Instantiated state");
@@ -68,8 +69,9 @@ namespace alexshkorp.bumpcars.Multiplayer
             }
         }
 
-        public void Despawned(NetworkRunner runner, bool hasState)
+        public override void Despawned(NetworkRunner runner, bool hasState)
         {
+            base.Despawned(runner, hasState);
             _gameState.NotifyGameStateChange -= _ballController.SetBallByGameState;
         }
     }

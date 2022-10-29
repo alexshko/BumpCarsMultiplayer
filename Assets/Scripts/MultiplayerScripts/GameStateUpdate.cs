@@ -19,7 +19,7 @@ namespace alexshkorp.bumpcars.Multiplayer
         /// </summary>
         GameState _curState;
 
-        private const int numOfRequiredPlayers = 2;
+        private const int numOfRequiredPlayers = 1;
         private const int numOfRequiredGoals = 2;
 
         [Inject]
@@ -46,7 +46,7 @@ namespace alexshkorp.bumpcars.Multiplayer
             }
             else if (_curState == GameState.running)
             {
-                if (_runner.ActivePlayers.Count() <= numOfRequiredPlayers)
+                if (_runner.ActivePlayers.Count() < numOfRequiredPlayers)
                 {
                     newGameSate = GameState.waitforplayer;
                 }
