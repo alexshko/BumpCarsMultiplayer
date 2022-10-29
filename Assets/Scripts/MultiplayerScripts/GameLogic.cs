@@ -26,14 +26,16 @@ namespace alexshkorp.bumpcars.Multiplayer
         /// <summary>
         /// Ref to the ball instantiation in the game
         /// </summary>
+        [Inject]
         IBallController _ballController;
+
+        [Inject]
+        static IGameUIUpdate _gameUI;
 
         /// <summary>
         /// The players score
         /// </summary>
-        //[Inject(Id = "score")]
-        [Networked] NetworkDictionary<PlayerRef, int> playersScore => default;
-
+        [Networked(OnChanged = nameof(UpdateScore))] NetworkDictionary<PlayerRef, int> playersScore => default;
 
         /// <summary>
         /// The current state of the game
@@ -57,9 +59,8 @@ namespace alexshkorp.bumpcars.Multiplayer
             _gameState.CalculateGameState();
         }
 
-        public override void Spawned()
+        public GameLogic()
         {
-            base.Spawned();
             if (Runner.IsServer)
             {
                 Debug.Log("Instantiated state");
@@ -69,10 +70,15 @@ namespace alexshkorp.bumpcars.Multiplayer
             }
         }
 
-        public override void Despawned(NetworkRunner runner, bool hasState)
+        ~GameLogic() => _gameState.NotifyGameStateChange -= _ballController.SetBallByGameState;
+
+        private static void UpdateScore(Changed<GameLogic> changedVal)
         {
-            base.Despawned(runner, hasState);
-            _gameState.NotifyGameStateChange -= _ballController.SetBallByGameState;
+            changedVal.LoadNew();
+            for (int i = 0; i < changedVal.Behaviour.playersScore.Count(); i++)
+            {
+                _gameUI.UpdateScore(i, changedVal.Behaviour.playersScore[i]);
+            }
         }
     }
 }
