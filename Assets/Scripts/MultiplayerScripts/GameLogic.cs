@@ -31,7 +31,7 @@ namespace alexshkorp.bumpcars.Multiplayer
         /// <summary>
         /// The players score
         /// </summary>
-        [Inject(Id = "score")]
+        //[Inject(Id = "score")]
         [Networked] NetworkDictionary<PlayerRef, int> playersScore => default;
 
 

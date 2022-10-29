@@ -21,7 +21,10 @@ public class GameEnjections : MonoInstaller
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMovementNetworked>();
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMoveSimpleSinglePlayer>();
 
-        Container.BindInstance<NetworkDictionary<PlayerRef, int>>(new NetworkDictionary<PlayerRef, int>()).WithId("score").AsSingle();
+        NetworkDictionary<PlayerRef, int> mapping = default;
+        Container.Bind<NetworkDictionary<PlayerRef, int>>().WithId("score").FromInstance(mapping).AsSingle();
+        Container.Bind<int>().WithId("123").FromInstance(4).AsSingle();
+        //Container.BindInstance<NetworkDictionary<PlayerRef, int>>(new NetworkDictionary<PlayerRef, int>()).WithId("score").AsSingle();
         Container.Bind<IGameLogic>().To<GameLogic>().FromComponentInNewPrefab(gameLogicPrefab).AsSingle();
         Container.Bind<NetworkObject>().WithId("ballPref").FromInstance(ballPRefab).AsTransient();
         Container.Bind<IGameStateUpdate>().To<GameStateUpdate>().AsSingle().NonLazy();
