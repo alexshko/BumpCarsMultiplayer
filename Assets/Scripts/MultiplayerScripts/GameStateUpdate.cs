@@ -1,6 +1,5 @@
 using Fusion;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Zenject;
 
@@ -13,6 +12,9 @@ namespace alexshkorp.bumpcars.Multiplayer
         //[Inject(Id ="score")]
         //Dictionary<PlayerRef, int> _playersScore;
 
+        /// <summary>
+        /// Reference to the player create methods for registering when user is created
+        /// </summary>
         IPlayerCreate _playerCreator;
 
         /// <summary>
@@ -47,7 +49,10 @@ namespace alexshkorp.bumpcars.Multiplayer
             }
             else if (_curState == GameState.running)
             {
-
+                if (_runner.ActivePlayers.Count() <= numOfRequiredPlayers)
+                {
+                    newGameSate = GameState.waitforplayer;
+                }
             }
             else
             {

@@ -23,7 +23,7 @@ public class GameEnjections : MonoInstaller
 
         Container.BindInstance<Dictionary<PlayerRef, int>>(new Dictionary<PlayerRef, int>()).WithId("score").AsSingle();
         Container.Bind<IGameLogic>().To<GameLogic>().FromComponentInNewPrefab(gameLogicPrefab).AsSingle();
-        Container.Bind<NetworkObject>().WithId("ballPref").FromComponentInNewPrefab(ballPRefab).AsTransient();
+        Container.Bind<NetworkObject>().WithId("ballPref").FromInstance(ballPRefab).AsTransient();
         Container.Bind<IGameStateUpdate>().To<GameStateUpdate>().AsSingle().NonLazy();
     }
 

@@ -51,8 +51,8 @@ public class GamePlayersCreator : IPlayerCreate
         _networkRunner.SetPlayerObject(player, playerObject);
 
         //update the hoop of the player:
-        PlayerHoop hoop = posToInit.GetComponent<PlayerHoop>();
-        hoop.SetPlayer(player);
+        var hoopRef = posToInit.GetComponent<PlayerHoopReference>();
+        hoopRef.hoop.SetPlayer(player);
 
         NotifyNewPlayerCreated?.Invoke();
     }
@@ -64,6 +64,8 @@ public class GamePlayersCreator : IPlayerCreate
             _networkRunner.Despawn(carObj);
         }
         _networkRunner.SetPlayerObject(player, null);
+
+        NotifyNewPlayerCreated?.Invoke();
     }
 
 }
