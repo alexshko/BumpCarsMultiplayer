@@ -32,6 +32,9 @@ namespace alexshkorp.bumpcars.Multiplayer
         [Inject]
         static IGameUIUpdate _gameUI;
 
+        [Inject]
+        NetworkRunner _runner;
+
         /// <summary>
         /// The players score
         /// </summary>
@@ -59,9 +62,10 @@ namespace alexshkorp.bumpcars.Multiplayer
             _gameState.CalculateGameState();
         }
 
-        public GameLogic()
+        public void Start()
         {
-            if (Runner.IsServer)
+            base.Spawned();
+            if (_runner.IsServer)
             {
                 Debug.Log("Instantiated state");
                 State = GameState.waitforplayer;
@@ -70,7 +74,11 @@ namespace alexshkorp.bumpcars.Multiplayer
             }
         }
 
-        ~GameLogic() => _gameState.NotifyGameStateChange -= _ballController.SetBallByGameState;
+        public override void Despawned(NetworkRunner runner, bool hasState)
+        {
+            base.Despawned(runner, hasState);
+            _gameState.NotifyGameStateChange -= _ballController.SetBallByGameState;
+        }
 
         private static void UpdateScore(Changed<GameLogic> changedVal)
         {
