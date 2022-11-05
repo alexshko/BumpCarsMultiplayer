@@ -6,6 +6,7 @@ using Fusion.Sockets;
 using System;
 using Zenject;
 using alexshkorp.bumpcars.Multiplayer;
+using System.Linq;
 
 public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -14,6 +15,8 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
 
     [Inject]
     private IPlayerInput _playerInput;
+
+    [SerializeField] NetworkObject GameLogicRef;
 
     public Action ActionPlayersChanged { get; set; }
     void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
@@ -63,10 +66,15 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
     void INetworkRunnerCallbacks.OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.LogFormat("{0}: player joined", runner.IsServer? "Server" : "Client");
-        if (runner.IsServer)
+        if (runner.IsServer && runner.ActivePlayers.Count() == 1)
         {
             _playersCreator.CreateCarInstance(player);
             ActionPlayersChanged?.Invoke();
+            if (runner.ActivePlayers.Count() == 1)
+            {
+                //spawn gamelogic
+                runner.Spawn(GameLogicRef);
+            }
         }
     }
 

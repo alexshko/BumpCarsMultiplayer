@@ -55,18 +55,25 @@ namespace alexshkorp.bumpcars.Multiplayer
             _gameStats.Score.Set(playerMadeGoal, _gameStats.Score.Get(playerMadeGoal) + 1);
         }
 
-        public void Start()
+        public override void Spawned()
         {
-            if (Object.HasStateAuthority)
+            base.Spawned();
+            if (_runner.IsServer)
             {
+                Debug.Log("Server Init");
                 GameStats.ActionStateChanged += s => _ballController.SetBallByGameState(s);
-                _creatNewPlayer.NotifyNewPlayerCreated +=  () => _gameStats.RecalculateState();
+                _creatNewPlayer.NotifyNewPlayerCreated += () => _gameStats.RecalculateState();
             }
         }
 
+        //public void Start()
+        //{
+        //}
+
+
         private void OnDestroy()
         {
-            if (Object.HasStateAuthority)
+            if (_runner.IsServer)
             {
                 GameStats.ActionStateChanged -= s => _ballController.SetBallByGameState(s);
                 _creatNewPlayer.NotifyNewPlayerCreated -= () => _gameStats.RecalculateState();
