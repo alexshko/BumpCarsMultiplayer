@@ -5,6 +5,7 @@ using Fusion;
 using Fusion.Sockets;
 using System;
 using Zenject;
+using alexshkorp.bumpcars.Multiplayer;
 
 public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -14,6 +15,7 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
     [Inject]
     private IPlayerInput _playerInput;
 
+    public Action ActionPlayersChanged { get; set; }
     void INetworkRunnerCallbacks.OnConnectedToServer(NetworkRunner runner)
     {
         //throw new NotImplementedException();
@@ -64,6 +66,7 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
         if (runner.IsServer)
         {
             _playersCreator.CreateCarInstance(player);
+            ActionPlayersChanged?.Invoke();
         }
     }
 

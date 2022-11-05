@@ -27,27 +27,32 @@ public class GameEnjections : MonoInstaller
     [Tooltip("Prefab of the GameLogic")]
     [SerializeField] NetworkObject gameLogicPrefab;
 
+    [Tooltip("Prefab of the game state change logic")]
+    [SerializeField] NetworkObject gameSateLogicPrefab;
+
     [SerializeField] PlayerSettings[] settings;
 
     public override void InstallBindings()
     {
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMovementNetworked>();
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMoveSimpleSinglePlayer>();
-
-        //NetworkDictionary<PlayerRef, int> mapping = default;
-        //Container.Bind<NetworkDictionary<PlayerRef, int>>().WithId("score").FromInstance(mapping).AsSingle();
-        //Container.Bind<int>().WithId("123").FromInstance(4).AsSingle();
-        //Container.BindInstance<NetworkDictionary<PlayerRef, int>>(new NetworkDictionary<PlayerRef, int>()).WithId("score").AsSingle();
+        Container.Bind<GameStats>().FromComponentInNewPrefab(gameSateLogicPrefab).AsSingle();
         Container.Bind<IGameUIUpdate>().To<ScoreUpdate>().AsSingle();
         Container.Bind<IBallController>().To<BallStateController>().AsTransient();
         Container.Bind<PlayerSettings[]>().FromInstance(settings).AsSingle();
         Container.Bind<IGameLogic>().To<GameLogic>().FromComponentInNewPrefab(gameLogicPrefab).AsSingle();
         Container.Bind<NetworkObject>().WithId("ballPref").FromInstance(ballPRefab).AsTransient();
-        Container.Bind<IGameStateUpdate>().To<GameStateUpdate>().AsSingle().NonLazy();
+        Container.Bind<IGameStateLogic>().To<GameStateLogic>().AsSingle().NonLazy();
     }
 
     private void Backup()
     {
+
+        //NetworkDictionary<PlayerRef, int> mapping = default;
+        //Container.Bind<NetworkDictionary<PlayerRef, int>>().WithId("score").FromInstance(mapping).AsSingle();
+        //Container.Bind<int>().WithId("123").FromInstance(4).AsSingle();
+        //Container.BindInstance<NetworkDictionary<PlayerRef, int>>(new NetworkDictionary<PlayerRef, int>()).WithId("score").AsSingle();
+
         //Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMovementNetworked>().NonLazy();
         //Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMoveSimpleSinglePlayer>();
         //Container.Bind<Rigidbody>().FromInstance(carPrefab.GetComponent<Rigidbody>()).WhenInjectedInto<PlayerMovement>().NonLazy();

@@ -5,7 +5,7 @@ using Zenject;
 
 namespace alexshkorp.bumpcars.Multiplayer
 {
-    public class GameStateUpdate : IGameStateUpdate
+    public class GameStateLogic : IGameStateLogic
     {
         NetworkRunner _runner;
 
@@ -14,37 +14,35 @@ namespace alexshkorp.bumpcars.Multiplayer
         /// </summary>
         IPlayerCreate _playerCreator;
 
-        /// <summary>
-        /// The current game state
-        /// </summary>
-        GameState _curState;
+        ///// <summary>
+        ///// The stats of the game (score and state)
+        ///// </summary>
+        //GameStats _gameStats;
 
         private const int numOfRequiredPlayers = 1;
         private const int numOfRequiredGoals = 2;
 
         [Inject]
-        public GameStateUpdate(IPlayerCreate _playerCreator, NetworkRunner _runner)
+        public GameStateLogic(IPlayerCreate _playerCreator, NetworkRunner _runner)
         {
             this._playerCreator = _playerCreator;
             this._runner = _runner;
-            this._playerCreator.NotifyNewPlayerCreated += () => { CalculateGameState(); };
+            //this._gameStats = stats;
         }
-
-        ~GameStateUpdate() => _playerCreator.NotifyNewPlayerCreated -= () => { CalculateGameState(); };
 
         public Action<GameState> NotifyGameStateChange { get; set ; }
 
-        public GameState CalculateGameState()
+        public GameState CalculateGameState(GameState curState)
         {
-            GameState newGameSate = _curState;
-            if (_curState == GameState.waitforplayer)
+            GameState newGameSate = curState;
+            if (curState == GameState.waitforplayer)
             {
                 if (_runner.ActivePlayers.Count() == numOfRequiredPlayers)
                 {
                     newGameSate = GameState.running;
                 }
             }
-            else if (_curState == GameState.running)
+            else if (curState == GameState.running)
             {
                 if (_runner.ActivePlayers.Count() < numOfRequiredPlayers)
                 {
@@ -55,14 +53,7 @@ namespace alexshkorp.bumpcars.Multiplayer
             {
 
             }
-
-            bool isAboutToChange = newGameSate != _curState;
-            _curState = newGameSate;
-            if (isAboutToChange)
-            {
-                NotifyGameStateChange?.Invoke(_curState);
-            }
-            return _curState;
+            return newGameSate;
         }
     }
 }

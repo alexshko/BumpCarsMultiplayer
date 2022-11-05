@@ -1484,6 +1484,7 @@ MonoBehaviour:
   carPrefab: {fileID: 5724679708509584410, guid: 3ec4697ed00eda54daeaef777cd95b01, type: 3}
   ballPRefab: {fileID: 3749596738383133559, guid: 2d10da98ee749c345b90294486be194e, type: 3}
   gameLogicPrefab: {fileID: 2050745672724155282, guid: cc2282272bab843418b6c3fe3fd7f2dd, type: 3}
+  gameSateLogicPrefab: {fileID: 7096050561020887443, guid: bca104baf249b3940a8af1fd8997c423, type: 3}
   settings:
   - pos: {fileID: 1551962827}
     hoopRef: {fileID: 1054331189}

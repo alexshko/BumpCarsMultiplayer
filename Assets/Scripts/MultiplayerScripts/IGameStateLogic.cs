@@ -2,9 +2,9 @@
 
 namespace alexshkorp.bumpcars.Multiplayer
 {
-    public interface IGameStateUpdate
+    public interface IGameStateLogic
     {
-        GameState CalculateGameState();
+        GameState CalculateGameState(GameState curState);
         Action<GameState> NotifyGameStateChange { get; set; }
     }
 }

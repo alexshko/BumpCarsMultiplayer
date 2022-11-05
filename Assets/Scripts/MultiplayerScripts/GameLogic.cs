@@ -1,7 +1,5 @@
 using alexshkorp.bumpcars.UI;
 using Fusion;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Zenject;
@@ -17,11 +15,11 @@ namespace alexshkorp.bumpcars.Multiplayer
 
     public class GameLogic : NetworkBehaviour , IGameLogic
     {
-        /// <summary>
-        /// logic of game state
-        /// </summary>
-        [Inject]
-        IGameStateUpdate _gameState;
+        ///// <summary>
+        ///// logic of game state
+        ///// </summary>
+        //[Inject]
+        //static IGameStateLogic _gameState;
 
         /// <summary>
         /// Ref to the ball instantiation in the game
@@ -35,15 +33,11 @@ namespace alexshkorp.bumpcars.Multiplayer
         [Inject]
         NetworkRunner _runner;
 
-        /// <summary>
-        /// The players score
-        /// </summary>
-        [Networked(OnChanged = nameof(UpdateScore))] NetworkDictionary<PlayerRef, int> playersScore => default;
+        [Inject]
+        GameStats _gameStats;
 
-        /// <summary>
-        /// The current state of the game
-        /// </summary>
-        [Networked] public GameState State { get; set; }
+        [Inject]
+        IPlayerCreate _creatNewPlayer;
 
 
         /// <summary>
@@ -54,38 +48,28 @@ namespace alexshkorp.bumpcars.Multiplayer
         {
             //find the player which is not the one who got the goal:
             var playerMadeGoal = Runner.ActivePlayers.First(p => p != player);
-            if (!playersScore.ContainsKey(playerMadeGoal.PlayerId))
+            if (!_gameStats.Score.ContainsKey(playerMadeGoal.PlayerId))
             {
-                playersScore.Set(playerMadeGoal,0);
+                _gameStats.Score.Set(playerMadeGoal,0);
             }
-            playersScore.Set(playerMadeGoal, playersScore.Get(playerMadeGoal) + 1);
-            _gameState.CalculateGameState();
+            _gameStats.Score.Set(playerMadeGoal, _gameStats.Score.Get(playerMadeGoal) + 1);
         }
 
         public void Start()
         {
-            base.Spawned();
-            if (_runner.IsServer)
+            if (Object.HasStateAuthority)
             {
-                Debug.Log("Instantiated state");
-                State = GameState.waitforplayer;
-                _gameState.CalculateGameState();
-                _gameState.NotifyGameStateChange += _ballController.SetBallByGameState;
+                GameStats.ActionStateChanged += s => _ballController.SetBallByGameState(s);
+                _creatNewPlayer.NotifyNewPlayerCreated +=  () => _gameStats.RecalculateState();
             }
         }
 
-        public override void Despawned(NetworkRunner runner, bool hasState)
+        private void OnDestroy()
         {
-            base.Despawned(runner, hasState);
-            _gameState.NotifyGameStateChange -= _ballController.SetBallByGameState;
-        }
-
-        private static void UpdateScore(Changed<GameLogic> changedVal)
-        {
-            changedVal.LoadNew();
-            for (int i = 0; i < changedVal.Behaviour.playersScore.Count(); i++)
+            if (Object.HasStateAuthority)
             {
-                _gameUI.UpdateScore(i, changedVal.Behaviour.playersScore[i]);
+                GameStats.ActionStateChanged -= s => _ballController.SetBallByGameState(s);
+                _creatNewPlayer.NotifyNewPlayerCreated -= () => _gameStats.RecalculateState();
             }
         }
     }
