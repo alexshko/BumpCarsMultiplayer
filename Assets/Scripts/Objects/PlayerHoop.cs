@@ -11,7 +11,7 @@ namespace alexshkorp.bumpcars.Objects
     public class PlayerHoop : MonoBehaviour
     {
         [Inject]
-        IGameLogic _gameLogic;
+        LazyInject<IGameLogic> _gameLogic;
 
         /// <summary>
         /// The player which this hoop belogns to
@@ -54,7 +54,7 @@ namespace alexshkorp.bumpcars.Objects
             }
 
             //notify about the goal
-            _gameLogic.TakenGoal(_playerRelated);
+            _gameLogic.Value.TakenGoal(_playerRelated);
         }
     }
 }

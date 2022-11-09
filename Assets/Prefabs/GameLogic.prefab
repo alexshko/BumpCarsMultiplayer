@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5376162408027488031}
   - component: {fileID: 5376162408027488030}
+  - component: {fileID: 275517661563177417}
   - component: {fileID: 2050745672724155282}
   - component: {fileID: 9154816775921856263}
   m_Layer: 0
@@ -47,6 +48,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+--- !u!114 &275517661563177417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5376162408027488017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c65950b1ed53b541a15b534a6c8eeb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
 --- !u!114 &2050745672724155282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +84,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5376162408027488030}
+  - {fileID: 275517661563177417}
   SimulationBehaviours: []
 --- !u!114 &9154816775921856263
 MonoBehaviour:

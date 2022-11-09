@@ -24,11 +24,11 @@ public class GameEnjections : MonoInstaller
     [Tooltip("Prefab of the ball")]
     [SerializeField] NetworkObject ballPRefab;
 
-    [Tooltip("Prefab of the GameLogic")]
-    [SerializeField] NetworkObject gameLogicPrefab;
+    //[Tooltip("Prefab of the GameLogic")]
+    //[SerializeField] NetworkObject gameLogicPrefab;
 
-    [Tooltip("Prefab of the game state change logic")]
-    [SerializeField] NetworkObject gameSateLogicPrefab;
+    //[Tooltip("Prefab of the game state change logic")]
+    //[SerializeField] NetworkObject gameSateLogicPrefab;
 
     [SerializeField] PlayerSettings[] settings;
 
@@ -36,7 +36,7 @@ public class GameEnjections : MonoInstaller
     {
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMovementNetworked>();
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMoveSimpleSinglePlayer>();
-        Container.Bind<GameStats>().FromComponentInNewPrefab(gameSateLogicPrefab).AsSingle();
+        Container.Bind<GameStats>().FromComponentInHierarchy().AsSingle();
         Container.Bind<IGameUIUpdate>().To<ScoreUpdate>().AsSingle();
         Container.Bind<IBallController>().To<BallStateController>().AsTransient();
         Container.Bind<PlayerSettings[]>().FromInstance(settings).AsSingle();

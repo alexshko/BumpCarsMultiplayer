@@ -34,7 +34,7 @@ namespace alexshkorp.bumpcars.Multiplayer
         NetworkRunner _runner;
 
         [Inject]
-        GameStats _gameStats;
+        LazyInject<GameStats> _gameStats;
 
         [Inject]
         IPlayerCreate _creatNewPlayer;
@@ -48,11 +48,11 @@ namespace alexshkorp.bumpcars.Multiplayer
         {
             //find the player which is not the one who got the goal:
             var playerMadeGoal = Runner.ActivePlayers.First(p => p != player);
-            if (!_gameStats.Score.ContainsKey(playerMadeGoal.PlayerId))
+            if (!_gameStats.Value.Score.ContainsKey(playerMadeGoal.PlayerId))
             {
-                _gameStats.Score.Set(playerMadeGoal,0);
+                _gameStats.Value.Score.Set(playerMadeGoal,0);
             }
-            _gameStats.Score.Set(playerMadeGoal, _gameStats.Score.Get(playerMadeGoal) + 1);
+            _gameStats.Value.Score.Set(playerMadeGoal, _gameStats.Value.Score.Get(playerMadeGoal) + 1);
         }
 
         public override void Spawned()
@@ -62,7 +62,7 @@ namespace alexshkorp.bumpcars.Multiplayer
             {
                 Debug.Log("Server Init");
                 GameStats.ActionStateChanged += s => _ballController.SetBallByGameState(s);
-                _creatNewPlayer.NotifyNewPlayerCreated += () => _gameStats.RecalculateState();
+                _creatNewPlayer.NotifyNewPlayerCreated += () => _gameStats.Value.RecalculateState();
             }
         }
 
@@ -76,7 +76,7 @@ namespace alexshkorp.bumpcars.Multiplayer
             if (_runner.IsServer)
             {
                 GameStats.ActionStateChanged -= s => _ballController.SetBallByGameState(s);
-                _creatNewPlayer.NotifyNewPlayerCreated -= () => _gameStats.RecalculateState();
+                _creatNewPlayer.NotifyNewPlayerCreated -= () => _gameStats.Value.RecalculateState();
             }
         }
     }

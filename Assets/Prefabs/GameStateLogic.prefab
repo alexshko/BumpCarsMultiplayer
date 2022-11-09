@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7096050561020887441}
   - component: {fileID: 7096050561020887440}
   - component: {fileID: 7096050561020887443}
+  - component: {fileID: 4918729472573455844}
   m_Layer: 0
   m_Name: GameStateLogic
   m_TagString: Untagged
@@ -70,3 +71,16 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 7096050561020887440}
   SimulationBehaviours: []
+--- !u!114 &4918729472573455844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096050561020887442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717a02054ef2699498e6bd4234fd7995, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _containerSource: 2
