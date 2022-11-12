@@ -9,6 +9,7 @@ namespace alexshkorp.bumpcars.Multiplayer
     {
         waitforplayer,
         running,
+        breakBetweenGoals,
         end,
     }
 
@@ -52,6 +53,7 @@ namespace alexshkorp.bumpcars.Multiplayer
                 _gameStats.Score.Set(playerMadeGoal,0);
             }
             _gameStats.Score.Set(playerMadeGoal, _gameStats.Score.Get(playerMadeGoal) + 1);
+            _ballController.RecenterBall();
         }
 
         public override void Spawned()

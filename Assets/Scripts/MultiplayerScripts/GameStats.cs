@@ -5,6 +5,9 @@ using Zenject;
 
 namespace alexshkorp.bumpcars.Multiplayer
 {
+    /// <summary>
+    /// Holds the state and score of the game
+    /// </summary>
     public class GameStats : NetworkBehaviour, IGameStats
     {
         [Inject]

@@ -4,6 +4,7 @@ using UnityEngine;
 using Fusion;
 using Zenject;
 using alexshkorp.bumpcars.Multiplayer;
+using System;
 
 namespace alexshkorp.bumpcars.Objects
 {
@@ -47,14 +48,25 @@ namespace alexshkorp.bumpcars.Objects
             {
                 return;
             }
-
+            
             if (other.gameObject.GetComponent<Ball>() != null)
             {
                 ballDuringEnter = false;
-            }
 
-            //notify about the goal
-            _gameLogic.Value.TakenGoal(_playerRelated);
+                //if a ball exited in the right direction (and backwards) then it means it's a goal:
+                if (CheckIfGoalDirectionOK(other))
+                {
+                    _gameLogic.Value.TakenGoal(_playerRelated);
+                }
+            }
+        }
+
+        private bool CheckIfGoalDirectionOK(Collider other)
+        {
+            //the direction the ball went through when it exited the hoop
+            Vector3 dirImpact = other.attachedRigidbody.velocity.normalized;
+
+            return Vector3.Dot(dirImpact, -transform.forward) > 0.99f;
         }
     }
 }

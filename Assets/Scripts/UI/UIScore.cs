@@ -1,52 +1,51 @@
 using alexshkorp.bumpcars.Multiplayer;
 using Fusion;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-public class UIScore : MonoBehaviour
+namespace alexshkorp.bumpcars.UI
 {
-    [Tooltip("text of the score of players")]
-    [SerializeField] TMP_Text[] txtPlayers;
-
-    [Inject]
-    NetworkRunner _runner;
-
-    private void Start()
+    public class UIScore : MonoBehaviour
     {
-        GameStats.ActionScoreChange += UpdateUIScore;
-        SetInitScore();
-    }
+        [Tooltip("text of the score of players")]
+        [SerializeField] TMP_Text[] txtPlayers;
 
-    private void OnDestroy() => GameStats.ActionScoreChange -= UpdateUIScore;
+        [Inject]
+        NetworkRunner _runner;
 
-    /// <summary>
-    /// Update the score of all players
-    /// </summary>
-    /// <param name="scores"></param>
-    private void UpdateUIScore(NetworkDictionary<PlayerRef, int> scores)
-    {
-        int place = 0;
-        foreach (var player in _runner.ActivePlayers)
+        private void Start()
         {
-            int score = 0;
-            if (scores.ContainsKey(player))
+            GameStats.ActionScoreChange += UpdateUIScore;
+            SetInitScore();
+        }
+
+        private void OnDestroy() => GameStats.ActionScoreChange -= UpdateUIScore;
+
+        /// <summary>
+        /// Update the score of all players
+        /// </summary>
+        /// <param name="scores"></param>
+        private void UpdateUIScore(NetworkDictionary<PlayerRef, int> scores)
+        {
+            int place = 0;
+            foreach (var player in _runner.ActivePlayers)
             {
-                score = scores[player];
+                int score = 0;
+                if (scores.ContainsKey(player))
+                {
+                    score = scores[player];
+                }
+                txtPlayers[place].text = score.ToString();
+                place++;
             }
-            txtPlayers[place].text = score.ToString();
-            place++;
         }
-    }
-    private void SetInitScore()
-    {
-        foreach (var txtScore in txtPlayers)
+        private void SetInitScore()
         {
-            txtScore.text = "0";
+            foreach (var txtScore in txtPlayers)
+            {
+                txtScore.text = "0";
+            }
         }
     }
-
 }

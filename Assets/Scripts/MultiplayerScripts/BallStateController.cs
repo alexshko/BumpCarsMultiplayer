@@ -18,6 +18,13 @@ namespace alexshkorp.bumpcars.Multiplayer
 
         NetworkObject ballRef;
 
+        public void RecenterBall()
+        {
+            Rigidbody ballRB = ballRef.GetComponent<Rigidbody>();
+            ballRB.position = new Vector3(0, 1, 0);
+            ballRB.velocity = Vector3.zero;
+            ballRB.angularVelocity = Vector3.zero;
+        }
 
         public void SetBallByGameState(GameState state)
         {
