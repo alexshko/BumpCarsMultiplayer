@@ -48,6 +48,30 @@ namespace alexshkorp.bumpcars.Multiplayer
         public static Action<GameState> ActionStateChanged { get; set; }
 
         /// <summary>
+        /// Call this funtion to recalculate the state of the game
+        /// </summary>
+        public void RecalculateState()
+        {
+            State = _gameState.CalculateGameState(State);
+        }
+
+        public override void Spawned()
+        {
+            base.Spawned();
+            if (_runner.IsServer)
+            {
+                Debug.Log("Instantiated state");
+                State = GameState.waitforplayer;
+                RecalculateState();
+            }
+        }
+
+        public override void Despawned(NetworkRunner runner, bool hasState)
+        {
+            base.Despawned(runner, hasState);
+        }
+
+        /// <summary>
         /// Called when the score is changed by server
         /// </summary>
         /// <param name="changedVal"></param>
@@ -65,27 +89,6 @@ namespace alexshkorp.bumpcars.Multiplayer
         {
             changedVal.LoadNew();
             ActionStateChanged?.Invoke(changedVal.Behaviour.CurrentState);
-        }
-
-        public void RecalculateState()
-        {
-            State = _gameState.CalculateGameState(State);
-        }
-
-        public override void Spawned()
-        {
-            base.Spawned(); 
-            if (_runner.IsServer)
-            {
-                Debug.Log("Instantiated state");
-                State = GameState.waitforplayer;
-                RecalculateState();
-            }
-        }
-
-        public override void Despawned(NetworkRunner runner, bool hasState)
-        {
-            base.Despawned(runner, hasState);
         }
     }
 }

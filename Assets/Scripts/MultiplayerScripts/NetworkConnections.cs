@@ -66,7 +66,7 @@ public class NetworkConnections : MonoBehaviour, INetworkRunnerCallbacks
     void INetworkRunnerCallbacks.OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         Debug.LogFormat("{0}: player joined", runner.IsServer? "Server" : "Client");
-        if (runner.IsServer && runner.ActivePlayers.Count() == 1)
+        if (runner.IsServer)
         {
             _playersCreator.CreateCarInstance(player);
             ActionPlayersChanged?.Invoke();
