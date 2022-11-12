@@ -433,7 +433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a9120534447e7748893a0e995d3b958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtPlayer:
+  txtPlayers:
   - {fileID: 429353461}
   - {fileID: 924948964}
 --- !u!1 &426823227

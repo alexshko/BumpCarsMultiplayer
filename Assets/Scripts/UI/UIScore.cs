@@ -10,12 +10,16 @@ using Zenject;
 public class UIScore : MonoBehaviour
 {
     [Tooltip("text of the score of players")]
-    [SerializeField] TMP_Text[] txtPlayer;
+    [SerializeField] TMP_Text[] txtPlayers;
 
     [Inject]
     NetworkRunner _runner;
 
-    private void Start() => GameStats.ActionScoreChange += UpdateUIScore;
+    private void Start()
+    {
+        GameStats.ActionScoreChange += UpdateUIScore;
+        SetInitScore();
+    }
 
     private void OnDestroy() => GameStats.ActionScoreChange -= UpdateUIScore;
 
@@ -33,8 +37,16 @@ public class UIScore : MonoBehaviour
             {
                 score = scores[player];
             }
-            txtPlayer[place].text = score.ToString();
+            txtPlayers[place].text = score.ToString();
             place++;
-        } 
+        }
     }
+    private void SetInitScore()
+    {
+        foreach (var txtScore in txtPlayers)
+        {
+            txtScore.text = "0";
+        }
+    }
+
 }
