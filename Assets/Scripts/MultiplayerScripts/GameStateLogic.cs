@@ -23,7 +23,7 @@ namespace alexshkorp.bumpcars.Multiplayer
         private const int numOfRequiredPlayers = 2;
         private const int numOfRequiredGoals = 2;
         private const float timeToWaitBetweenGoals = 3;
-        Fusion.TickTimer timeElapsedBetweenGoals;
+        TickTimer timeElapsedBetweenGoals;
 
         [Inject]
         public GameStateLogic(IPlayerCreate _playerCreator, NetworkRunner _runner)
@@ -34,6 +34,8 @@ namespace alexshkorp.bumpcars.Multiplayer
         }
 
         public Action<GameState> NotifyGameStateChange { get; set ; }
+
+        public float? TimeBetweenGoalsBreaksRemain => timeElapsedBetweenGoals.IsRunning ? timeElapsedBetweenGoals.RemainingTime(_runner) : null;
 
         /// <summary>
         /// Logic to calculate the state of the game
