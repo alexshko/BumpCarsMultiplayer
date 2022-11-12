@@ -58,6 +58,18 @@ namespace alexshkorp.bumpcars.Multiplayer
             State = _gameState.CalculateGameState(State);
         }
 
+        public override void FixedUpdateNetwork()
+        {
+            base.FixedUpdateNetwork();
+
+            //check state change:
+            var newState = _gameState.CalculateGameState(State);
+            if (newState != State)
+            {
+                State = newState;
+            }
+        }
+
         public override void Spawned()
         {
             base.Spawned();
