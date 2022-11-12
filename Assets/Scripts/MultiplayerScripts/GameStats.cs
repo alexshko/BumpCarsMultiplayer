@@ -41,7 +41,7 @@ namespace alexshkorp.bumpcars.Multiplayer
         /// <summary>
         /// Action to be performed when the score changes
         /// </summary>
-        public static Action ActionScoreChange { get; set; }
+        public static Action<NetworkDictionary<PlayerRef, int>> ActionScoreChange { get; set; }
         /// <summary>
         /// Action to be performed when the state of the game is changed
         /// </summary>
@@ -77,8 +77,8 @@ namespace alexshkorp.bumpcars.Multiplayer
         /// <param name="changedVal"></param>
         private static void UpdateScore(Changed<GameStats> changedVal)
         {
-            //changedVal.LoadNew();
-            ActionScoreChange?.Invoke();
+            changedVal.LoadNew();
+            ActionScoreChange?.Invoke(changedVal.Behaviour.playersScore);
         }
 
         /// <summary>

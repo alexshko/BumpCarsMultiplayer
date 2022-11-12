@@ -1,9 +1,7 @@
 using alexshkorp.bumpcars.Multiplayer;
 using alexshkorp.bumpcars.Objects;
-using alexshkorp.bumpcars.UI;
 using Fusion;
 using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -37,7 +35,6 @@ public class GameEnjections : MonoInstaller
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMovementNetworked>();
         Container.Bind<Rigidbody>().FromComponentInChildren().WhenInjectedInto<PlayerMoveSimpleSinglePlayer>();
         Container.Bind<GameStats>().FromComponentInHierarchy().AsSingle();
-        Container.Bind<IGameUIUpdate>().To<ScoreUpdate>().AsSingle();
         Container.Bind<IBallController>().To<BallStateController>().AsTransient();
         Container.Bind<PlayerSettings[]>().FromInstance(settings).AsSingle();
         Container.Bind<IGameLogic>().To<GameLogic>().FromComponentInHierarchy().AsSingle();
@@ -48,6 +45,7 @@ public class GameEnjections : MonoInstaller
     private void Backup()
     {
 
+        //Container.Bind<IGameUIUpdate>().To<ScoreUpdate>().AsSingle();
         //NetworkDictionary<PlayerRef, int> mapping = default;
         //Container.Bind<NetworkDictionary<PlayerRef, int>>().WithId("score").FromInstance(mapping).AsSingle();
         //Container.Bind<int>().WithId("123").FromInstance(4).AsSingle();

@@ -329,6 +329,7 @@ GameObject:
   - component: {fileID: 349353367}
   - component: {fileID: 349353366}
   - component: {fileID: 349353365}
+  - component: {fileID: 349353369}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -420,6 +421,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &349353369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 349353364}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a9120534447e7748893a0e995d3b958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  txtPlayer:
+  - {fileID: 429353461}
+  - {fileID: 924948964}
 --- !u!1 &426823227
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,8 +1499,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carPrefab: {fileID: 5724679708509584410, guid: 3ec4697ed00eda54daeaef777cd95b01, type: 3}
   ballPRefab: {fileID: 3749596738383133559, guid: 2d10da98ee749c345b90294486be194e, type: 3}
-  gameLogicPrefab: {fileID: 2050745672724155282, guid: cc2282272bab843418b6c3fe3fd7f2dd, type: 3}
-  gameSateLogicPrefab: {fileID: 7096050561020887443, guid: bca104baf249b3940a8af1fd8997c423, type: 3}
   settings:
   - pos: {fileID: 1551962827}
     hoopRef: {fileID: 1054331189}
