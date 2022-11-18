@@ -7,7 +7,5 @@ namespace alexshkorp.bumpcars.Multiplayer
     {
         GameState CurrentState { get; set; }
         NetworkDictionary<PlayerRef, int> Score { get; }
-
-        void RecalculateState();
     }
 }

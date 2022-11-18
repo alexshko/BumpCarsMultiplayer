@@ -13,8 +13,8 @@ namespace alexshkorp.bumpcars.Multiplayer
         [Inject]
         NetworkRunner _runner;
 
-        [Inject]
-        IGameStateLogic _gameState;
+        //[Inject]
+        //IGameStateLogic _gameState;
 
         /// <summary>
         /// The players score
@@ -49,42 +49,6 @@ namespace alexshkorp.bumpcars.Multiplayer
         /// Action to be performed when the state of the game is changed
         /// </summary>
         public static Action<GameState> ActionStateChanged { get; set; }
-
-        /// <summary>
-        /// Call this funtion to recalculate the state of the game
-        /// </summary>
-        public void RecalculateState()
-        {
-            State = _gameState.CalculateGameState(State);
-        }
-
-        public override void FixedUpdateNetwork()
-        {
-            base.FixedUpdateNetwork();
-
-            //check state change:
-            var newState = _gameState.CalculateGameState(State);
-            if (newState != State)
-            {
-                State = newState;
-            }
-        }
-
-        public override void Spawned()
-        {
-            base.Spawned();
-            if (_runner.IsServer)
-            {
-                Debug.Log("Instantiated state");
-                State = GameState.waitforplayer;
-                RecalculateState();
-            }
-        }
-
-        public override void Despawned(NetworkRunner runner, bool hasState)
-        {
-            base.Despawned(runner, hasState);
-        }
 
         /// <summary>
         /// Called when the score is changed by server

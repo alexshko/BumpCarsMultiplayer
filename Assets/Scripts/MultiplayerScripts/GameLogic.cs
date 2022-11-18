@@ -15,11 +15,11 @@ namespace alexshkorp.bumpcars.Multiplayer
 
     public class GameLogic : NetworkBehaviour , IGameLogic
     {
-        ///// <summary>
-        ///// logic of game state
-        ///// </summary>
-        //[Inject]
-        //static IGameStateLogic _gameState;
+        /// <summary>
+        /// logic of game state
+        /// </summary>
+        [Inject]
+        static IGameStateLogic _gameState;
 
         /// <summary>
         /// Ref to the ball instantiation in the game
@@ -62,8 +62,13 @@ namespace alexshkorp.bumpcars.Multiplayer
             if (_runner.IsServer)
             {
                 Debug.Log("Server Init");
-                GameStats.ActionStateChanged += s => _ballController.SetBallByGameState(s);
-                _creatNewPlayer.NotifyNewPlayerCreated += () => _gameStats.RecalculateState();
+                _gameState.NotifyGameStateChange += s => _ballController.SetBallByGameState(s);
+
+                //update the stats state so it will get to the clients:
+                _gameState.NotifyGameStateChange += s => _gameStats.CurrentState = s;
+                Debug.Log("Instantiated state");
+                _gameStats.CurrentState = GameState.waitforplayer;
+                RecalculateState();
             }
         }
 
@@ -72,9 +77,26 @@ namespace alexshkorp.bumpcars.Multiplayer
         {
             if (_runner.IsServer)
             {
-                GameStats.ActionStateChanged -= s => _ballController.SetBallByGameState(s);
-                _creatNewPlayer.NotifyNewPlayerCreated -= () => _gameStats.RecalculateState();
+                _gameState.NotifyGameStateChange -= s => _ballController.SetBallByGameState(s);
+                _gameState.NotifyGameStateChange -= s => _gameStats.CurrentState = s;
             }
+        }
+
+        public override void FixedUpdateNetwork()
+        {
+            base.FixedUpdateNetwork();
+            RecalculateState();
+        }
+
+
+
+
+        /// <summary>
+        /// Call this funtion to recalculate the state of the game
+        /// </summary>
+        private void RecalculateState()
+        {
+            _gameState.CalculateGameState();
         }
     }
 }
