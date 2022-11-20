@@ -36,7 +36,7 @@ namespace alexshkorp.bumpcars.Multiplayer
             }
         }
 
-        private const int numOfRequiredPlayers = 2;
+        private const int numOfRequiredPlayers = 1;
         private const int numOfRequiredGoals = 3;
         private const float timeToWaitBetweenGoals = 3;
         TickTimer timeElapsedBetweenGoals;
@@ -104,6 +104,6 @@ namespace alexshkorp.bumpcars.Multiplayer
         }
 
         //the game is ended once the sum of goals is numOfRequiredGoals
-        private bool CheckIFGameEnd() => _gameStats.Score.Select((p, s) => s).Sum() >= numOfRequiredGoals;
+        private bool CheckIFGameEnd() => _gameStats.Score.Count() > 0 ? _gameStats.Score.Select((p, s) => s).Sum() >= numOfRequiredGoals : false;
     }
 }

@@ -19,7 +19,7 @@ namespace alexshkorp.bumpcars.Multiplayer
         /// logic of game state
         /// </summary>
         [Inject]
-        static IGameStateLogic _gameState;
+        IGameStateLogic _gameState;
 
         /// <summary>
         /// Ref to the ball instantiation in the game
@@ -34,10 +34,13 @@ namespace alexshkorp.bumpcars.Multiplayer
         NetworkRunner _runner;
 
         [Inject]
-        GameStats _gameStats;
+        IGameStats _gameStats;
 
         [Inject]
         IPlayerCreate _creatNewPlayer;
+
+        [Inject]
+        IInGamePlay _inGamePlay;
 
 
         /// <summary>
@@ -53,7 +56,14 @@ namespace alexshkorp.bumpcars.Multiplayer
                 _gameStats.Score.Set(playerMadeGoal,0);
             }
             _gameStats.Score.Set(playerMadeGoal, _gameStats.Score.Get(playerMadeGoal) + 1);
+
+            //go to break between goals:
+            _gameState.CurrentState = GameState.breakBetweenGoals;
+
+            //respawn ball and players:
             _ballController.RecenterBall();
+
+            //todo: add  respawn of players
         }
 
         public override void Spawned()
@@ -62,12 +72,10 @@ namespace alexshkorp.bumpcars.Multiplayer
             if (_runner.IsServer)
             {
                 Debug.Log("Server Init");
-                _gameState.NotifyGameStateChange += s => _ballController.SetBallByGameState(s);
+                _gameState.NotifyGameStateChange += UpdateStateOfGame;
 
-                //update the stats state so it will get to the clients:
-                _gameState.NotifyGameStateChange += s => _gameStats.CurrentState = s;
-                Debug.Log("Instantiated state");
                 _gameStats.CurrentState = GameState.waitforplayer;
+                Debug.Log("Instantiated state");
                 RecalculateState();
             }
         }
@@ -77,19 +85,18 @@ namespace alexshkorp.bumpcars.Multiplayer
         {
             if (_runner.IsServer)
             {
-                _gameState.NotifyGameStateChange -= s => _ballController.SetBallByGameState(s);
-                _gameState.NotifyGameStateChange -= s => _gameStats.CurrentState = s;
+                _gameState.NotifyGameStateChange -= UpdateStateOfGame;
             }
         }
 
         public override void FixedUpdateNetwork()
         {
             base.FixedUpdateNetwork();
-            RecalculateState();
+            if (_runner.IsServer)
+            {
+                RecalculateState();
+            }
         }
-
-
-
 
         /// <summary>
         /// Call this funtion to recalculate the state of the game
@@ -97,6 +104,24 @@ namespace alexshkorp.bumpcars.Multiplayer
         private void RecalculateState()
         {
             _gameState.CalculateGameState();
+        }
+
+        /// <summary>
+        /// Called every time the state of game is changed
+        /// </summary>
+        /// <param name="s"></param>
+        private void UpdateStateOfGame(GameState s)
+        {
+            _ballController.SetBallByGameState(s);
+
+            //update the stats state so it will get to the clients:
+            _gameStats.CurrentState = s;
+
+            //If there was g goal, then reposiotion the layers
+            if (s == GameState.breakBetweenGoals)
+            {
+                _inGamePlay.ResetPlayersPositions();
+            }
         }
     }
 }
